@@ -1,0 +1,27 @@
+# závislosti
+node_modules/
+
+# build
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# proměnné prostředí — nikdy necommitovat, obsahují hesla a API klíče
+.env
+.env.*
+!.env.example
+
+# lokální "poštovní schránka" mail driveru console
+.dev-mail/
+
+# nasazení
+.vercel
+
+# logy
+*.log
+npm-debug.log*
+
+# systémové
+.DS_Store
+Thumbs.db
