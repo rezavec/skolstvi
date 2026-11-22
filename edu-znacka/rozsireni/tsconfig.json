@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "types": ["chrome"]
+  },
+  "include": ["src/**/*.ts", "build.mjs", "scripts/**/*.mjs"],
+  "exclude": ["node_modules", "dist-chrome", "dist-firefox"]
+}

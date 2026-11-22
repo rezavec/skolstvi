@@ -1,0 +1,151 @@
+/*
+ * Vzhled značky na YouTube.
+ *
+ * Dvě věci, na kterých to stojí:
+ *
+ * 1. `all: initial` na kořeni značky. YouTube má vlastní globální styly
+ *    a bez resetu by značku zdědila (jiné písmo, jiná výška řádku, někdy
+ *    i `display: none` od nějakého jejich pravidla). Shadow DOM by to
+ *    vyřešil taky, ale pak se ke značce nedá dostat z testu ani ji
+ *    nestylovat podle tmavého režimu.
+ *
+ * 2. Tmavý režim se pozná z `html[dark]`, což YouTube nastavuje. Na
+ *    `prefers-color-scheme` se spolehnout nejde — na YouTube se dá tmavý
+ *    režim zapnout nezávisle na systému.
+ */
+
+/*
+ * Reset se dává kořeni značky a textu, NE všemu uvnitř.
+ *
+ * `all: initial` na `*` by sejmulo i SVG ikonu: `fill` z atributu je
+ * prezentační atribut, který prohrává s jakýmkoli CSS pravidlem, takže by
+ * se ikona přebarvila na černou, a reset rozměrů by ji srazil na nulu.
+ * Proto se ikona řeší vlastními pravidly níž.
+ */
+.ez-znacka {
+  all: initial;
+  box-sizing: border-box;
+}
+
+/*
+ * Text potřebuje reset taky (YouTube má globální pravidla na span),
+ * ale musí si vzít písmo a barvu od značky — jinak by `all: initial`
+ * vrátilo patkové písmo a černou barvu, což na barevném pozadí
+ * znamená nečitelnou značku.
+ */
+.ez-znacka .ez-text {
+  all: initial;
+  box-sizing: border-box;
+  display: block;
+  font: inherit;
+  color: inherit;
+}
+
+.ez-znacka {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px 2px 6px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: "Roboto", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  /* Nad náhledem videa, pod vyskakovacími nabídkami YouTube. */
+  z-index: 10;
+  /* Značka má být čitelná i na světlém náhledu. */
+  box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+}
+
+.ez-znacka .ez-ikona {
+  display: block;
+  width: 12px;
+  height: 12px;
+  flex: none;
+  /* Bez tohohle by se ikona ve flexu smrskla, až nebude text kam dát. */
+  min-width: 12px;
+}
+
+/* Beze změny by `fill` zůstalo na hodnotě z atributu — funguje to, ale
+   explicitní pravidlo je odolnější vůči cizím globálním stylům. */
+.ez-znacka .ez-ikona path {
+  fill: currentColor;
+}
+
+/* ── Umístění ──────────────────────────────────────────────────────────── */
+
+/* Na náhledu: levý dolní roh, aby to nekolidovalo s délkou videa vpravo. */
+.ez-nahled {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  max-width: calc(100% - 12px);
+  overflow: hidden;
+}
+
+/* U nadpisu videa: za textem, posunutá na účaří. */
+.ez-nadpis {
+  margin-left: 10px;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+/* ── Barvy ─────────────────────────────────────────────────────────────── */
+
+.ez-video {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #15803d;
+}
+
+.ez-kanal {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+html[dark] .ez-video,
+[dark] .ez-video {
+  background: #0b2e18;
+  border-color: #16643a;
+  color: #4ade80;
+}
+
+html[dark] .ez-kanal,
+[dark] .ez-kanal {
+  background: #11214d;
+  border-color: #1e40af;
+  color: #93c5fd;
+}
+
+/* Na malé šířce (mobilní YouTube) se vejde jen ikona. */
+@media (max-width: 500px) {
+  .ez-nahled .ez-text {
+    display: none;
+  }
+  .ez-nahled {
+    padding: 3px;
+  }
+}
+
+/* ── Režimy zobrazení ──────────────────────────────────────────────────── */
+
+.ez-ztlumeno {
+  opacity: 0.35;
+  transition: opacity 120ms ease-in;
+}
+
+/* Po najetí se ztlumené video zase ukáže — ztlumení má odrazovat,
+   ne znemožňovat. */
+.ez-ztlumeno:hover,
+.ez-ztlumeno:focus-within {
+  opacity: 1;
+}
+
+.ez-skryto {
+  display: none !important;
+}

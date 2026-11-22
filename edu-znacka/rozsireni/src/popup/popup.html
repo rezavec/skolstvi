@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edu značka</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <svg viewBox="0 0 16 16" aria-hidden="true" class="logo">
+        <path
+          fill="currentColor"
+          d="M8 0a8 8 0 100 16A8 8 0 008 0zm3.86 5.47L7.4 11.1a.75.75 0 01-1.1.07L3.9 8.9a.75.75 0 111.02-1.1l1.8 1.68 3.95-5a.75.75 0 011.18.93z"
+        />
+      </svg>
+      <strong>Edu značka</strong>
+    </header>
+
+    <fieldset>
+      <legend>Co dělat s videi bez značky</legend>
+
+      <label>
+        <input type="radio" name="rezim" value="znacky" />
+        <span>
+          <strong>Nic — jen přidat značky</strong>
+          <small>YouTube zůstane, jak je.</small>
+        </span>
+      </label>
+
+      <label>
+        <input type="radio" name="rezim" value="ztlumit" />
+        <span>
+          <strong>Ztlumit</strong>
+          <small>Zprůhlední je. Po najetí myší se zase ukážou.</small>
+        </span>
+      </label>
+
+      <label>
+        <input type="radio" name="rezim" value="jen-overena" />
+        <span>
+          <strong>Skrýt — jen ověřená</strong>
+          <small id="varovani-filtru">
+            Pozor: dokud je v databázi málo videí, bude hlavní stránka
+            YouTube skoro prázdná. Na objevování je lepší katalog.
+          </small>
+        </span>
+      </label>
+    </fieldset>
+
+    <label class="prepinac">
+      <input type="checkbox" id="kanaly" />
+      <span>
+        <strong>Brát i značku „důvěryhodný kanál“</strong>
+        <small>
+          Slabší tvrzení: kanál drží úroveň, ale tohle video nikdo
+          nerecenzoval. V režimu „jen ověřená“ se nepočítá nikdy.
+        </small>
+      </span>
+    </label>
+
+    <div class="stav">
+      <p id="pocty">Načítám…</p>
+      <p id="synchronizace" class="tise"></p>
+      <button type="button" id="aktualizovat">Aktualizovat teď</button>
+    </div>
+
+    <footer>
+      <a id="odkaz-katalog" href="#" target="_blank" rel="noreferrer noopener">
+        Katalog ověřených videí
+      </a>
+      <a id="odkaz-jak" href="#" target="_blank" rel="noreferrer noopener">
+        Jak se značka uděluje
+      </a>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

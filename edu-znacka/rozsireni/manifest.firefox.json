@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Edu značka pro YouTube",
+  "version": "0.1.0",
+  "description": "Ukáže u videí na YouTube, která z nich ověřil odborník z oboru jako odpovídající vědeckému konsenzu.",
+  "icons": {
+    "16": "ikony/16.png",
+    "32": "ikony/32.png",
+    "48": "ikony/48.png",
+    "128": "ikony/128.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "scripts": [
+      "pozadi.js"
+    ],
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Edu značka"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*"
+      ],
+      "js": [
+        "obsah.js"
+      ],
+      "css": [
+        "styl.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "edu-znacka@skolstvi.local",
+      "strict_min_version": "128.0"
+    }
+  }
+}
