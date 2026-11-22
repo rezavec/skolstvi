@@ -1,0 +1,140 @@
+<!doctype html>
+<!--
+  Zjednodušený snímek mřížky videí na YouTube.
+
+  Proč fixture a ne opravdové YouTube: test má padat, když se rozbije
+  rozšíření, ne když YouTube vydá redesign nebo zobrazí souhlas s cookies.
+  Živá kontrola je v témže testu za přepínačem SMOKE_LIVE=1.
+
+  Struktura schválně kopíruje to podstatné ze skutečného YouTube: vnořené
+  ytd-* elementy, odkaz na video s obrázkem uvnitř a odkaz na kanál
+  v sousední větvi. Přesné názvy tříd nejsou důležité — rozšíření se na ně
+  nesmí spoléhat, a právě to tenhle test hlídá.
+-->
+<html lang="cs" dark>
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube</title>
+    <style>
+      body { background: #0f0f0f; color: #fff; font-family: Roboto, sans-serif; margin: 0; padding: 16px; }
+      #contents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      ytd-rich-item-renderer { display: block; }
+      a#thumbnail { display: block; }
+      a#thumbnail img { width: 100%; aspect-ratio: 16/9; background: #272727; display: block; border-radius: 8px; }
+      #video-title { font-size: 14px; font-weight: 500; color: #fff; text-decoration: none; display: block; margin-top: 8px; }
+      ytd-channel-name a { font-size: 12px; color: #aaa; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <ytd-rich-grid-renderer>
+      <div id="contents">
+        <!-- 1) ověřené video (v indexu jako video) -->
+        <ytd-rich-item-renderer data-test="overene">
+          <div id="content">
+            <ytd-rich-grid-media>
+              <div id="dismissible">
+                <ytd-thumbnail>
+                  <a id="thumbnail" href="/watch?v=aaaaaaaaaaa">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                  </a>
+                </ytd-thumbnail>
+                <div id="details">
+                  <a id="video-title" href="/watch?v=aaaaaaaaaaa">Jak funguje gravitace</a>
+                  <div id="meta">
+                    <ytd-channel-name><a href="/@fyzikanadosah">Fyzika na dosah</a></ytd-channel-name>
+                  </div>
+                </div>
+              </div>
+            </ytd-rich-grid-media>
+          </div>
+        </ytd-rich-item-renderer>
+
+        <!-- 2) neověřené video z důvěryhodného kanálu (kanál podle přezdívky) -->
+        <ytd-rich-item-renderer data-test="kanal-prezdivka">
+          <div id="content">
+            <ytd-rich-grid-media>
+              <div id="dismissible">
+                <ytd-thumbnail>
+                  <a id="thumbnail" href="/watch?v=bbbbbbbbbbb">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                  </a>
+                </ytd-thumbnail>
+                <div id="details">
+                  <a id="video-title" href="/watch?v=bbbbbbbbbbb">Imunitní systém za 10 minut</a>
+                  <div id="meta">
+                    <ytd-channel-name><a href="/@kurzgesagt">Kurzgesagt</a></ytd-channel-name>
+                  </div>
+                </div>
+              </div>
+            </ytd-rich-grid-media>
+          </div>
+        </ytd-rich-item-renderer>
+
+        <!-- 3) neověřené video z neznámého kanálu — nesmí mít značku -->
+        <ytd-rich-item-renderer data-test="nezname">
+          <div id="content">
+            <ytd-rich-grid-media>
+              <div id="dismissible">
+                <ytd-thumbnail>
+                  <a id="thumbnail" href="/watch?v=ccccccccccc">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                  </a>
+                </ytd-thumbnail>
+                <div id="details">
+                  <a id="video-title" href="/watch?v=ccccccccccc">Co nám zatajili o pyramidách</a>
+                  <div id="meta">
+                    <ytd-channel-name><a href="/@zahadnysvet">Záhadný svět</a></ytd-channel-name>
+                  </div>
+                </div>
+              </div>
+            </ytd-rich-grid-media>
+          </div>
+        </ytd-rich-item-renderer>
+
+        <!-- 4) důvěryhodný kanál podle ID (bez přezdívky v odkazu) -->
+        <ytd-rich-item-renderer data-test="kanal-id">
+          <div id="content">
+            <ytd-rich-grid-media>
+              <div id="dismissible">
+                <ytd-thumbnail>
+                  <a id="thumbnail" href="/watch?v=ddddddddddd">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                  </a>
+                </ytd-thumbnail>
+                <div id="details">
+                  <a id="video-title" href="/watch?v=ddddddddddd">Jak vznikají hvězdy</a>
+                  <div id="meta">
+                    <ytd-channel-name>
+                      <a href="/channel/UCsXVk37bltHxD1rDPwtNM8Q">Kurzgesagt</a>
+                    </ytd-channel-name>
+                  </div>
+                </div>
+              </div>
+            </ytd-rich-grid-media>
+          </div>
+        </ytd-rich-item-renderer>
+
+        <!-- 5) Shorts — jiný tvar adresy -->
+        <ytd-rich-item-renderer data-test="shorts">
+          <div id="content">
+            <ytd-rich-grid-media>
+              <div id="dismissible">
+                <ytd-thumbnail>
+                  <a id="thumbnail" href="/shorts/eeeeeeeeeee">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                  </a>
+                </ytd-thumbnail>
+                <div id="details">
+                  <a id="video-title" href="/shorts/eeeeeeeeeee">Pokus s kyvadlem</a>
+                  <div id="meta">
+                    <ytd-channel-name><a href="/@fyzikanadosah">Fyzika na dosah</a></ytd-channel-name>
+                  </div>
+                </div>
+              </div>
+            </ytd-rich-grid-media>
+          </div>
+        </ytd-rich-item-renderer>
+      </div>
+    </ytd-rich-grid-renderer>
+  </body>
+</html>

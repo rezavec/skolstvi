@@ -1,0 +1,147 @@
+:root {
+  --pozadi: #ffffff;
+  --text: #18181b;
+  --tise: #71717a;
+  --linka: #e4e4e7;
+  --zelena: #15803d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pozadi: #18181b;
+    --text: #fafafa;
+    --tise: #a1a1aa;
+    --linka: #3f3f46;
+    --zelena: #4ade80;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  padding: 14px;
+  background: var(--pozadi);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.logo {
+  width: 18px;
+  height: 18px;
+  color: var(--zelena);
+}
+
+fieldset {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0 0 7px;
+  font-weight: 600;
+}
+
+label {
+  display: flex;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 1px solid var(--linka);
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+label:hover {
+  border-color: var(--zelena);
+}
+
+label input {
+  margin: 2px 0 0;
+  flex: none;
+  accent-color: var(--zelena);
+}
+
+label span {
+  display: block;
+}
+
+label small {
+  display: block;
+  margin-top: 2px;
+  color: var(--tise);
+}
+
+/* Varování u striktního filtru se ukáže jen když je zapnutý — jinak jen
+   straší u volby, kterou si nikdo nevybral. */
+#varovani-filtru {
+  display: none;
+}
+
+label:has(input[value="jen-overena"]:checked) #varovani-filtru {
+  display: block;
+  color: #b45309;
+}
+
+.prepinac {
+  margin-bottom: 14px;
+}
+
+.stav {
+  padding-top: 12px;
+  border-top: 1px solid var(--linka);
+}
+
+.stav p {
+  margin: 0 0 4px;
+}
+
+.tise {
+  color: var(--tise);
+}
+
+button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--linka);
+  border-radius: 7px;
+  background: var(--pozadi);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--zelena);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--linka);
+}
+
+footer a {
+  color: var(--zelena);
+}
